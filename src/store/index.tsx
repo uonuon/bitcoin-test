@@ -20,6 +20,7 @@ const reducer = (state: State, action: Action) => {
     case 'SET_HISTORY':
       return {
         ...state,
+        pending: false,
         history: action.history,
       };
     case 'FAILED':
@@ -33,7 +34,7 @@ const reducer = (state: State, action: Action) => {
   }
 };
 
-type AsyncFetchData = { type: 'GET_HISTORY', x: number };
+type AsyncFetchData = { type: 'GET_HISTORY', days: number };
 
 
 type AsyncAction = AsyncFetchData;
@@ -43,14 +44,17 @@ const asyncActionHandlers: AsyncActionHandlers<
   AsyncAction
 > = {
   GET_HISTORY:
-    ({ dispatch }) =>
+    ({ dispatch, getState }) =>
       async (action) => {
         try {
-          dispatch({ type: 'FETCHING' });
+          const state = getState()
+          if (state.history.length === 0) {
+            dispatch({ type: 'FETCHING' });
+          }
           fetch('https://index-api.bitcoin.com/api/v0/cash/history')
             .then((data) => data.json())
             .then((d) => {
-              const history = d.reverse().filter((d: any, i: number) => i % action.x === 0).map((x: any) => {
+              const history = d.reverse().filter((d: any, i: number) => i % action.days === 0).map((x: any) => {
                 return { price: x[0], date: x[1] }
               })
               dispatch({ type: 'SET_HISTORY', history })

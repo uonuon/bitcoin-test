@@ -11,3 +11,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1;
+  padding: 30px;
+  align-items: center;
+}
+
+.custom-tooltip {
+  background-color: white;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.areachart-margins {
+  top: 30;
+  right: 30;
+  left: 10;
+  bottom: 0
+}
+
+.button {
+  background-color: #7266ff;
+  width: 100px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+}
