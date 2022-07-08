@@ -3,6 +3,29 @@ import Button from '../components/Button';
 import HistoryGraph from '../components/HistoryGraph';
 import { useDispatch, useTrackedState } from '../store';
 import NewsCards from './NewsCards';
+import styled from 'styled-components';
+
+
+const ButtonsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+`;
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1;
+    padding: 30px;
+    align-items: center;
+`
+
+const Price = styled.p`
+    font-size: 18px;
+    color: #7266ff;
+    font-weight: bold;
+`
 
 const Feed: React.FC = () => {
     const dispatch = useDispatch();
@@ -16,19 +39,19 @@ const Feed: React.FC = () => {
         }
     }, [state.history, dispatch])
 
-    return (<div className='feed'>
+    return (<Container>
+        <Price>Current Spot price: {+(state.currentPrice.price) / 100}$</Price>
         {state.pending ? <p>Loading..</p> : <>
             <HistoryGraph />
-            <div className='buttons-container'>
+            <ButtonsContainer>
                 <Button fnCall={() => dispatch({ type: 'GET_HISTORY', days: 30 })} title={'One Month'} />
                 <Button fnCall={() => dispatch({ type: 'GET_HISTORY', days: 7 })} title={'One Week'} />
                 <Button fnCall={() => dispatch({ type: 'GET_HISTORY', days: 1 })} title={'One Day'} />
-            </div>
+            </ButtonsContainer>
         </>
         }
-        <p>{+(state.currentPrice.price) / 100}$</p>
         <NewsCards news={state.news.slice(0, 4)} />
-    </div>)
+    </Container>)
 }
 
 export default Feed;
