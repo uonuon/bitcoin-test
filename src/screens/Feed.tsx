@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Button from '../components/Button';
 import HistoryGraph from '../components/HistoryGraph';
 import { useDispatch, useTrackedState } from '../store';
+import NewsCards from './NewsCards';
 
 const Feed: React.FC = () => {
     const dispatch = useDispatch();
@@ -10,6 +11,8 @@ const Feed: React.FC = () => {
     useEffect(() => {
         if (state.history.length === 0) {
             dispatch({ type: 'GET_HISTORY', days: 30 })
+            dispatch({ type: 'GET_NEWS' })
+            dispatch({ type: 'GET_PRICE' })
         }
     }, [state.history, dispatch])
 
@@ -23,6 +26,8 @@ const Feed: React.FC = () => {
             </div>
         </>
         }
+        <p>{+(state.currentPrice.price) / 100}$</p>
+        <NewsCards news={state.news.slice(0, 4)} />
     </div>)
 }
 
