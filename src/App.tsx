@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
+import Feed from './screens/Feed';
+import { Provider } from './store';
 
-const App:React.FC = () => {
+const App: React.FC = () => {
   return (
-    <div className="App">
-     Hello world
-    </div>
+    <Provider>
+      <Feed />
+    </Provider>
   );
 }
 
